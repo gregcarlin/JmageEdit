@@ -2,6 +2,9 @@ package en.jmageedit.model.filters;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Matrix extends Filter {
     private static final int GREEN_RGB = Color.GREEN.getRGB();
@@ -52,9 +55,25 @@ public class Matrix extends Filter {
             }
         }
         
-        float zeroThreshold = maxAverage * 0.66f;
-        float oneThreshold = maxAverage * 0.33f;
-        float[] allMegaPixs = new float[megaPixels.length*megaPixels[0].length];
+        //float zeroThreshold = maxAverage * 0.66f;
+        //float oneThreshold = maxAverage * 0.33f;
+        List<Float> allMegaPixels = new ArrayList<Float>();
+        for(int i=0; i<megaPixels.length; i++) {
+            for(int j=0; j<megaPixels[i].length; j++) {
+                if(!allMegaPixels.contains(megaPixels[i][j])) {
+                    allMegaPixels.add(megaPixels[i][j]);
+                }
+            }
+        }
+        Collections.sort(allMegaPixels);
+        int len = allMegaPixels.size();
+        for(int i=0; i<len; i++) {
+            System.out.println(allMegaPixels.get(i));
+        }
+        float zeroThreshold = allMegaPixels.get((int) (len * 0.66));
+        float oneThreshold = allMegaPixels.get((int) (len * 0.33));
+        //System.out.printf("0 = %f at %d%n", zeroThreshold, (int) (len * 0.66));
+        //System.out.printf("0 = %f at %d%n", oneThreshold, (int) (len * 0.33));
         
         for(int x=0; x<megaPixels.length; x++) {
             for(int y=0; y<megaPixels[x].length; y++) {
