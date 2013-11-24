@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import en.jmageedit.controller.FileInput;
 import en.jmageedit.model.Model;
 import en.jmageedit.model.filters.Filter;
 
@@ -26,6 +27,9 @@ public class View {
     private final JFrame imageFrame = new JFrame();
     private final JLabel imageLbl = new JLabel();
     private BufferedImage currentImage;
+    
+    private final JMenu openRecent = new JMenu("Open Recent");
+    private final JMenuItem none = new JMenuItem("None");
     
     private final JLabel preImageLbl = new JLabel("Open an image above.");
     
@@ -45,6 +49,10 @@ public class View {
                 View.this.model.getGUIHooks().onOpen();
             }});
         file.add(open);
+        
+        none.setEnabled(false);
+        openRecent.add(none);
+        file.add(openRecent);
         
         menuBar.add(file);
         
@@ -146,6 +154,18 @@ public class View {
     
     public BufferedImage getCurrentImage() {
         return currentImage;
+    }
+    
+    public void addRecent(final File item) {
+        openRecent.remove(none);
+        
+        JMenuItem jmi = new JMenuItem(item.getName());
+        jmi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                setImage(FileInput.readImage(item));
+            }});
+        openRecent.add(jmi, 0);
     }
     
     /**

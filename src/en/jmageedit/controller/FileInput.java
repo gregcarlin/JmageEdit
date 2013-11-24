@@ -7,6 +7,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class FileInput {
+    public static final BufferedImage readImage(String file) {
+        return readImage(new File(file));
+    }
+    
     /**
      * Attempts to read an image. Returns null if unreadable.
      * 

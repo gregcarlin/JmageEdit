@@ -10,7 +10,7 @@ import en.jmageedit.view.View;
 public class GUIHooks {
     private final View view;
     
-    public GUIHooks(View view) {
+    public GUIHooks(View view, Model model) {
         this.view = view;
     }
     
@@ -24,6 +24,7 @@ public class GUIHooks {
         if(bi == null) {
             view.error("Error reading image file.");
         } else {
+            view.addRecent(f);
             view.setImage(bi);
         }
     }
