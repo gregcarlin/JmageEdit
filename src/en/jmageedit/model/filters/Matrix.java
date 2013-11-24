@@ -25,5 +25,6 @@ public class Matrix extends Filter {
         int h = img.getHeight();
         
         BufferedImage outImage = new BufferedImage(w, h, img.getType());
+        return null;
     }
 }

@@ -133,6 +133,16 @@ public class View {
         JOptionPane.showMessageDialog(imageFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
+    /**
+     * Ask the user a question.
+     * 
+     * @param question
+     * @return Answer
+     */
+    public String ask(String question) {
+        return JOptionPane.showInputDialog(imageFrame, question);
+    }
+    
     public BufferedImage getCurrentImage() {
         return currentImage;
     }
