@@ -9,7 +9,8 @@ public abstract class Filter {
     
     public enum Type {
         GREYSCALE(new Greyscale(), "Greyscale"),
-        MATRIX(new Matrix(), "Matrix");
+        MATRIX(new Matrix(), "Matrix"),
+        INVERT(new Invert(), "Invert");
         
         private final Filter filter;
         private final String name;
