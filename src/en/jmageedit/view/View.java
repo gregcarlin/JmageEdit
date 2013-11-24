@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import en.jmageedit.model.Model;
+import en.jmageedit.model.filters.Filter;
 
 public class View {
     private static final int START_WIDTH = 500;
@@ -46,7 +47,16 @@ public class View {
         
         JMenu filter = new JMenu("Filter");
         
-        // TODO filter stuff
+        for(Filter.Type f : Filter.Type.values()) {
+            JMenuItem jmi = new JMenuItem(f.getName());
+            final Filter.Type ff = f; // cheating
+            jmi.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    View.this.model.getGUIHooks().onFilter(ff);
+                }});
+            filter.add(jmi);
+        }
         
         menuBar.add(filter);
         
