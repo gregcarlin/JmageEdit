@@ -1,5 +1,6 @@
 package en.jmageedit.model;
 
+import en.jmageedit.model.filters.Filter;
 import en.jmageedit.view.View;
 
 public class Model {
@@ -7,7 +8,7 @@ public class Model {
     private final GUIHooks guiHooks = new GUIHooks(view);
     
     public Model() {
-        
+        Filter.view = view;
     }
     
     public GUIHooks getGUIHooks() {

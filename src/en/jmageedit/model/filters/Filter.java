@@ -2,7 +2,11 @@ package en.jmageedit.model.filters;
 
 import java.awt.image.BufferedImage;
 
+import en.jmageedit.view.View;
+
 public abstract class Filter {
+    public static View view;
+    
     public enum Type {
         GREYSCALE(new Greyscale(), "Greyscale"),
         MATRIX(new Matrix(), "Matrix");

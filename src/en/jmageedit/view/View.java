@@ -96,6 +96,7 @@ public class View {
         
         if(img == null) {
             preImageLbl.setVisible(true);
+            imageLbl.setVisible(false);
             imageFrame.setBounds(imageFrame.getX(), imageFrame.getY(), START_WIDTH, START_HEIGHT);
             return;
         }
