@@ -42,4 +42,11 @@ public class GUIHooks {
         
         view.setImage(type.filter(bi));
     }
+    
+    /**
+     * Called when user clicks Edit->Change Size
+     */
+    public void onScale() {
+        
+    }
 }

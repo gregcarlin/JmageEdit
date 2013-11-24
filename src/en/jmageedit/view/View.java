@@ -50,7 +50,13 @@ public class View {
         
         JMenu edit = new JMenu("Edit");
         
-        // TODO edit stuff
+        JMenuItem scale = new JMenuItem("Change Size");
+        scale.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                View.this.model.getGUIHooks().onScale();
+            }});
+        edit.add(scale);
         
         menuBar.add(edit);
         

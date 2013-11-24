@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 
 public abstract class Filter {
     public enum Type {
-        GREYSCALE(new Greyscale(), "Greyscale");
+        GREYSCALE(new Greyscale(), "Greyscale"),
+        MATRIX(new Matrix(), "Matrix");
         
         private final Filter filter;
         private final String name;
