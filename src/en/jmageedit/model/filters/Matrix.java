@@ -6,6 +6,12 @@ import java.awt.image.BufferedImage;
 public class Matrix extends Filter {
     private static final int GREEN_RGB = Color.GREEN.getRGB();
     private static final int BLACK_RGB = Color.BLACK.getRGB();
+    private static final int[] NONE = {BLACK_RGB, BLACK_RGB, BLACK_RGB, BLACK_RGB,
+                                       BLACK_RGB, BLACK_RGB, BLACK_RGB, BLACK_RGB,
+                                       BLACK_RGB, BLACK_RGB, BLACK_RGB, BLACK_RGB,
+                                       BLACK_RGB, BLACK_RGB, BLACK_RGB, BLACK_RGB,
+                                       BLACK_RGB, BLACK_RGB, BLACK_RGB, BLACK_RGB,
+                                       BLACK_RGB, BLACK_RGB, BLACK_RGB, BLACK_RGB};
     private static final int[] ZERO = {GREEN_RGB, GREEN_RGB, GREEN_RGB, GREEN_RGB,
                                        GREEN_RGB, BLACK_RGB, BLACK_RGB, GREEN_RGB,
                                        GREEN_RGB, BLACK_RGB, BLACK_RGB, GREEN_RGB,
@@ -25,6 +31,43 @@ public class Matrix extends Filter {
         int h = img.getHeight();
         
         BufferedImage outImage = new BufferedImage(w, h, img.getType());
-        return null;
+        
+        float[][] megaPixels = new float[w / 5][h / 7];
+        float maxAverage = 0.0f;
+        for(int x=0; x<w-4; x+=5) {
+            for(int y=0; y<h-6; y+=7) {
+                int[] sourcePixels = img.getRGB(x, y, 4, 6, new int[20], 0, 1);
+                float sum = 0.0f;
+                for(int i=0; i<sourcePixels.length; i++) {
+                    Color c = new Color(sourcePixels[i]);
+                    int average = (c.getRed() + c.getGreen() + c.getBlue()) / 3; // smaller # = darker 
+                    float averageF = ((float) average) / 255.0f;
+                    sum += averageF;
+                }
+                float finalAverage = sum / ((float) sourcePixels.length);
+                megaPixels[x/5][y/7] = finalAverage;
+                if(finalAverage > maxAverage) {
+                    maxAverage = finalAverage;
+                }
+            }
+        }
+        
+        float zeroThreshold = maxAverage * 0.66f;
+        float oneThreshold = maxAverage * 0.33f;
+        float[] allMegaPixs = new float[megaPixels.length*megaPixels[0].length];
+        
+        for(int x=0; x<megaPixels.length; x++) {
+            for(int y=0; y<megaPixels[x].length; y++) {
+                if(megaPixels[x][y] > zeroThreshold) {
+                    outImage.setRGB(x * 5, y * 7, 4, 6, ZERO, 0, 4);
+                } else if(megaPixels[x][y] > oneThreshold) {
+                    outImage.setRGB(x * 5, y * 7, 4, 6, ONE, 0, 4);
+                } else {
+                    outImage.setRGB(x * 5, y * 7, 4, 6, NONE, 0, 4);
+                }
+            }
+        }
+        
+        return outImage;
     }
 }
