@@ -3,12 +3,16 @@ package en.jmageedit.view;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import en.jmageedit.model.Model;
 
 public class View {
     private static final int START_WIDTH = 500;
@@ -17,10 +21,19 @@ public class View {
     
     private final JMenuBar menuBar = new JMenuBar();
     
-    public View() {
+    private final Model model;
+    
+    public View(Model model) {
+        this.model = model;
+        
         JMenu file = new JMenu("File");
         
         JMenuItem open = new JMenuItem("Open");
+        open.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                View.this.model.getGUIHooks().onOpen();
+            }});
         file.add(open);
         
         menuBar.add(file);
