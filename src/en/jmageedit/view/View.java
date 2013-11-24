@@ -152,6 +152,21 @@ public class View {
         return JOptionPane.showInputDialog(imageFrame, question);
     }
     
+    /**
+     * Asks the user for a positive integer.
+     * 
+     * @param question
+     * @return Answer
+     */
+    public int askInt(String question) {
+        String s;
+        do {
+            s = ask(question);
+            if(s == null) return -1; // user hit cancel or something
+        } while(!s.matches("\\d+"));
+        return Integer.parseInt(s);
+    }
+    
     public BufferedImage getCurrentImage() {
         return currentImage;
     }
